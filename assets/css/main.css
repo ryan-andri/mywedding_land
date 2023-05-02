@@ -3,18 +3,15 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
-  font: 400 15px/1.8 "Outfit", "Open Sans", Arial, sans-serif;
+  font-family: "Outfit", "Open Sans", Arial, sans-serif;
   color: #5c5c5c;
-  background-color: #f1f1f1;
+  background-color: #d3d1d1;
+  font-size: 16px !important;
 }
 
-h1,
-h2 {
-  font-family: "Satisfy", "Open Sans", Arial, sans-serif;
-}
-
+.text-beautify,
 h1 {
-  font-size: 50px;
+  font-family: "Satisfy", "Open Sans", Arial, sans-serif;
 }
 
 .caption {
@@ -47,6 +44,13 @@ h1 {
   .visible-alert {
     display: none !important;
   }
+}
+
+.scrollable {
+  height: 200px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 footer {

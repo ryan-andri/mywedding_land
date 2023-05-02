@@ -5,7 +5,13 @@ $configs = [
     'DB_HOST' => 'localhost',
     'DB_USERNAME' => 'root',
     'DB_PASSWORD' => 'example',
-    'DB_NAME' => 'example'
+    'DB_NAME' => 'example',
+
+    // Dynamically
+    'nick_pria' => 'Pria',
+    'nick_wanita' => 'Wanita',
+    'nama_pria' => 'Penganten Pria',
+    'nama_wanita' => 'Penganten Wanita'
 ];
 
 foreach ($configs as $con => $value) {
