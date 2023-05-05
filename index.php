@@ -107,6 +107,14 @@ require_once('configs/config.php');
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+  <!-- right click ? nope -->
+  <!-- <script>
+    $(document).ready(function() {
+      $(document).bind("contextmenu", function(e) {
+        return false;
+      });
+    });
+  </script> -->
   <script>
     $(document).ready(function() {
       // load data
@@ -151,7 +159,13 @@ require_once('configs/config.php');
               if (param == '1')
                 alert('Ooops, terjadi masalah!');
             }
+            //always show result
             $("#komentar-container").html(data);
+
+            // reset field
+            $("#nama").val('');
+            $("#kehadiran").val('');
+            $("#komentar").val('');
           },
           error: function(msg, status, error) {
             console.error(msg);
