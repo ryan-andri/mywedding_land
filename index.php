@@ -1,6 +1,8 @@
 <?php
-session_start();
 require_once('configs/config.php');
+
+// guest name
+$nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 ?>
 
 <!DOCTYPE html>
@@ -31,9 +33,14 @@ require_once('configs/config.php');
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="caption">
+    <div class="caption align-item-center justify-content-center">
       <h1><?php echo env('nick_wanita'); ?> &amp; <?php echo env('nick_pria'); ?></h1>
       <h3>We Are Getting Married</h3>
+      <?php if ($nama_undangan) { ?>
+        <div class="card card-guest mx-auto align-items-center d-flex justify-content-center">
+          <p class="mb-1"><?php echo $nama_undangan; ?> <br> dan <br> Keluarga</p>
+        </div>
+      <?php } ?>
     </div>
   </div>
 
@@ -45,28 +52,41 @@ require_once('configs/config.php');
       <i style="font-size: 16px;" class="far">&#xf192;</i>
     </div>
 
-    <div class="shadow-lg m-2 justify-content-center">
-      <div class="card p-2 text-center">
-        <div class="text-center m-2c">
+    <div class="shadow-lg justify-content-center">
+      <div class="card p-2 text-center m-2">
+        <div class="text-center m-2">
           <img class="img-fluid" src="assets/images/Bismillah_Calligraphy6.svg" width="150" height="120" />
+          <p class="text-beautify"><strong>Assalamualaikum Wr. Wb</strong></p>
         </div>
-        <p class="text-beautify">Assalamualaikum Wr. Wb</p>
-        <p>Akad dan Resepsi</p>
-        <p>Minggu, 23 Juli 2023</p>
-        <p class="text-lg">Jl. Kedukan, Kertapati, Palembang</p>
+        <div class="card border-dark m-2">
+          <div class="card-body">
+            <p class="card-title text-center justify-content-center text-beautify" style="text-align: left;">
+              <strong>Akad</strong>
+            </p>
+            <p><?php echo env('tgl_akad'); ?></p>
+            <p class="text-lg"><?php echo env('alamat_akad'); ?></p>
+          </div>
+        </div>
+        <div class="card border-dark m-2 p-0">
+          <div class="card-body">
+            <p class="card-title text-center justify-content-center text-beautify" style="text-align: left;">
+              <strong>Resepsi</strong>
+            </p>
+            <p><?php echo env('tgl_resepsi'); ?></p>
+            <p class="text-lg"><?php echo env('alamat_resepsi'); ?></p>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- seperators -->
-    <div class="m-2 text-center justify-content-center">
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-    </div>
+      <!-- seperators -->
+      <div class="m-2 text-center justify-content-center">
+        <i style="font-size: 16px;" class="far">&#xf192;</i>
+        <i style="font-size: 16px;" class="far">&#xf192;</i>
+        <i style="font-size: 16px;" class="far">&#xf192;</i>
+      </div>
 
-    <div class="m-2 justify-content-center">
-      <div class="card p-2 text-center">
-        <p class="text-beautify">Pesan dan Kesan</p>
+      <div class="card p-2 text-center m-2">
+        <p class="text-beautify"><strong>Pesan dan Kesan</strong></p>
         <!-- get -->
         <div class="card scrollable mb-4">
           <div id="komentar-container"></div>
@@ -94,86 +114,86 @@ require_once('configs/config.php');
       </div>
     </div>
 
-    <footer class="footer">
-      Copyright &copy; The Wedding
+    <footer class="footer mt-2">
+      Copyright &copy; Ryan Andri
     </footer>
-  </div>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-  <!-- right click ? nope -->
-  <!-- <script>
+
+    <!-- right click ? nope -->
+    <!-- <script>
     $(document).ready(function() {
       $(document).bind("contextmenu", function(e) {
         return false;
       });
     });
   </script> -->
-  <script>
-    $(document).ready(function() {
-      // load data
-      ExecService(0);
-      // sent data
-      $("#submit").click(function() {
-        ExecService(1);
-        event.preventDefault();
-      });
-      // service
-      function ExecService(param) {
-        let nama = $("#nama").val();
-        let kehadiran = $("#kehadiran").val();
-        let komentar = $("#komentar").val();
-
-        if (param == '1') {
-          if (nama == '') {
-            alert("Kolom nama harap di isi.");
-            return false;
-          }
-          if (kehadiran == '') {
-            alert("Kolom kehadiran harap di isi.");
-            return false;
-          }
-        }
-
-        $.ajax({
-          type: "POST",
-          url: "service.php",
-          data: {
-            nama: nama,
-            kehadiran: kehadiran,
-            komentar: komentar,
-            opt: param
-          },
-          cache: false,
-          success: function(data) {
-            if (data != '') {
-              if (param == '1')
-                alert('Terima Kasih telah berkomentar :)');
-            } else {
-              if (param == '1')
-                alert('Ooops, terjadi masalah!');
-            }
-            //always show result
-            $("#komentar-container").html(data);
-
-            // reset field
-            $("#nama").val('');
-            $("#kehadiran").val('');
-            $("#komentar").val('');
-          },
-          error: function(msg, status, error) {
-            console.error(msg);
-          }
+    <script>
+      $(document).ready(function() {
+        // load data
+        ExecService(0);
+        // sent data
+        $("#submit").click(function() {
+          ExecService(1);
+          event.preventDefault();
         });
-      }
-    });
-  </script>
+        // service
+        function ExecService(param) {
+          let nama = $("#nama").val();
+          let kehadiran = $("#kehadiran").val();
+          let komentar = $("#komentar").val();
+
+          if (param == '1') {
+            if (nama == '') {
+              alert("Kolom nama harap di isi.");
+              return false;
+            }
+            if (kehadiran == '') {
+              alert("Kolom kehadiran harap di isi.");
+              return false;
+            }
+          }
+
+          $.ajax({
+            type: "POST",
+            url: "service.php",
+            data: {
+              nama: nama,
+              kehadiran: kehadiran,
+              komentar: komentar,
+              opt: param
+            },
+            cache: false,
+            success: function(data) {
+              if (param == '0') {
+                $("#komentar-container").html(data);
+              }
+
+              if (data != '') {
+                if (param == '1')
+                  alert('Terima Kasih telah berkomentar :)');
+                // reload data
+                $("#komentar-container").html(data);
+                // reset field
+                $("#nama").val('');
+                $("#kehadiran").val('');
+                $("#komentar").val('');
+              } else {
+                if (param == '1')
+                  alert('Ooops, terjadi masalah!');
+              }
+            },
+            error: function(msg, status, error) {
+              console.error(msg);
+            }
+          });
+        }
+      });
+    </script>
 </body>
 
 </html>
