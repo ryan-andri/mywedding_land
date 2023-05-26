@@ -1,10 +1,10 @@
 <?php
 require_once('configs/config.php');
 
-$input_nama = $_POST['nama'];
-$input_kehadiran = $_POST['kehadiran'];
-$input_komentar = $_POST['komentar'];
-$optin = $_POST['opt'];
+$input_nama = !empty($_POST["nama"]) ? $_POST["nama"] : null;
+$input_kehadiran = !empty($_POST["kehadiran"]) ? $_POST["kehadiran"] : null;
+$input_komentar = !empty($_POST["komentar"]) ? $_POST["komentar"] : null;
+$optin = !empty($_POST["opt"]) ? $_POST["opt"] : 0;
 
 if ($optin == '0') {
     loadKomentar();
