@@ -5,194 +5,227 @@ require_once('configs/config.php');
 $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 ?>
 
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html lang="en">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta charset="utf-8" />
-  <title>The Wedding</title>
-  <link rel="icon" type="image/x-icon" href="" />
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Outfit" rel="stylesheet" />
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-  <!-- Fontawesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <!-- Main style -->
-  <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Outfit" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Main style -->
+    <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 
 <body>
-  <!-- core -->
-  <div class="bg-image">
-    <div class="alert alert-primary alert-dismissible fade show visible-alert" role="alert">
-      <strong>Buka dengan Smartphone anda untuk melihat full undangan!</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="caption align-item-center justify-content-center">
-      <h1><?php echo env('nick_wanita'); ?> &amp; <?php echo env('nick_pria'); ?></h1>
-      <h3>We Are Getting Married</h3>
-      <?php if ($nama_undangan) { ?>
-        <div class="card card-guest mx-auto align-items-center d-flex justify-content-center">
-          <p class="mb-1"><?php echo $nama_undangan; ?> <br> dan <br> Keluarga</p>
-        </div>
-      <?php } ?>
-    </div>
-  </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light border-top navbar-expand fixed-bottom visible" id="navbot">
+        <ul class="navbar-nav nav-justified w-100">
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link active" id="home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" id="time">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" id="comments">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+                        <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z" />
+                    </svg>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" id="info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-  <div class="visible">
-    <!-- seperators -->
-    <div class="mt-2 text-center justify-content-center">
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-      <i style="font-size: 16px;" class="far">&#xf192;</i>
-    </div>
-
-    <div class="shadow-lg justify-content-center">
-      <div class="card p-2 text-center m-2">
-        <div class="text-center m-2">
-          <img class="img-fluid" src="assets/images/Bismillah_Calligraphy6.svg" width="150" height="120" />
-          <p class="text-beautify"><strong>Assalamualaikum Wr. Wb</strong></p>
-        </div>
-        <div class="card border-dark m-2">
-          <div class="card-body">
-            <p class="card-title text-center justify-content-center text-beautify" style="text-align: left;">
-              <strong>Akad</strong>
-            </p>
-            <p><?php echo env('tgl_akad'); ?></p>
-            <p class="text-lg"><?php echo env('alamat_akad'); ?></p>
-          </div>
-        </div>
-        <div class="card border-dark m-2 p-0">
-          <div class="card-body">
-            <p class="card-title text-center justify-content-center text-beautify" style="text-align: left;">
-              <strong>Resepsi</strong>
-            </p>
-            <p><?php echo env('tgl_resepsi'); ?></p>
-            <p class="text-lg"><?php echo env('alamat_resepsi'); ?></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- seperators -->
-      <div class="m-2 text-center justify-content-center">
-        <i style="font-size: 16px;" class="far">&#xf192;</i>
-        <i style="font-size: 16px;" class="far">&#xf192;</i>
-        <i style="font-size: 16px;" class="far">&#xf192;</i>
-      </div>
-
-      <div class="card p-2 text-center m-2">
-        <p class="text-beautify"><strong>Pesan dan Kesan</strong></p>
-        <!-- get -->
-        <div class="card scrollable mb-4">
-          <div id="komentar-container"></div>
-        </div>
-
-        <!-- input -->
-        <form method="post">
-          <div class="form-group">
-            <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukan Nama" />
-          </div>
-          <div class="form-group">
-            <select class="form-control" style="font-size: 16px !important;" name="kehadiran" id="kehadiran">
-              <option selected value="">Kehadiran ?</option>
-              <option value="hadir">Hadir</option>
-              <option value="tidak hadir">Tidak Hadir</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <textarea class="form-control" id="komentar" name="komentar" rows="4" placeholder="Silahkan beri komentar.."></textarea>
-          </div>
-          <button id="submit" class="form-control btn btn-primary">
-            Kirim
-          </button>
-        </form>
-      </div>
+    <!-- Content -->
+    <div id="content">
+        <!-- content -->
     </div>
 
-    <footer class="footer mt-2">
-      Copyright &copy; Ryan Andri
-    </footer>
+    <!-- Bootstrap Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Bottom Navbar listener -->
+    <script type="text/javascript">
+        async function loadComments(_submit, form) {
+            let fd = new FormData();
+            if (!form) {
+                fd.append('nama', '');
+                fd.append('kehadiran', '');
+                fd.append('komentar', '');
+            } else {
+                fd.append('nama', form[0]);
+                fd.append('kehadiran', form[1]);
+                fd.append('komentar', form[2]);
+            }
 
+            await fetch('service.php', {
+                body: fd,
+                method: "POST"
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                const _comments = document.getElementById("comments-container");
+                // avoid duplicate
+                _comments.innerHTML = '';
+                // proc the data
+                if (data) {
+                    data.forEach(element => {
+                        const _card = document.createElement("div");
+                        _card.classList.add("card", "border-dark", "m-2");
 
-    <!-- right click ? nope -->
-    <!-- <script>
-    $(document).ready(function() {
-      $(document).bind("contextmenu", function(e) {
-        return false;
-      });
-    });
-  </script> -->
-    <script>
-      $(document).ready(function() {
-        // load data
-        ExecService(0);
-        // sent data
-        $("#submit").click(function() {
-          ExecService(1);
-          event.preventDefault();
-        });
-        // service
-        function ExecService(param) {
-          let nama = $("#nama").val();
-          let kehadiran = $("#kehadiran").val();
-          let komentar = $("#komentar").val();
+                        const _cardBody = document.createElement("div");
+                        _cardBody.classList.add("ms-2", "me-2", "mt-2");
+                        _card.appendChild(_cardBody);
 
-          if (param == '1') {
+                        // name
+                        const _title = document.createElement("div");
+                        _title.classList.add("float-start");
+                        _title.style = "font-size: 12px";
+                        _title.innerHTML = "<strong>" + element.nama + "</strong>";
+                        _cardBody.appendChild(_title);
+
+                        // presence
+                        const _presence = document.createElement("span");
+                        _presence.classList.add("float-end");
+                        _presence.style = "font-size: 12px";
+                        _presence.innerHTML = element.kehadiran;
+                        _title.parentNode.insertBefore(_presence, _title.nextSibling);
+
+                        // presence
+                        const _commentBox = document.createElement("div");
+                        _commentBox.classList.add("ms-2", "me-2", "mb-2");
+                        _commentBox.style = "font-size: 12px";
+                        _commentBox.innerHTML = element.komentar;
+                        _cardBody.parentNode.insertBefore(_commentBox, _cardBody.next)
+
+                        // append to container
+                        _comments.appendChild(_card);
+                    });
+
+                    if (_submit) {
+                        document.getElementById("nama").value = '';
+                        document.getElementById("kehadiran").value = '';
+                        document.getElementById("komentar").value = '';
+                        alert('Terima Kasih telah berkomentar :)');
+                    }
+                } else {
+                    // create div first
+                    const _div = document.createElement("div");
+                    _div.classList.add("d-flex", "align-items-center", "justify-content-center", "mt-4");
+                    // append paragraph in created div
+                    const _p = document.createElement("p");
+                    _p.innerHTML = "Belum ada komentar!";
+                    _div.appendChild(_p);
+                    // append all
+                    _comments.appendChild(_div);
+                }
+            }).catch(function(e) {
+                console.warn('Error!', e);
+            });
+        }
+
+        async function fetchPages(opt) {
+            await fetch('pages/' + opt + '.html').then(function(response) {
+                return response.text();
+            }).then(function(data) {
+
+                document.getElementById("content").innerHTML = data;
+
+                switch (opt) {
+                    case 'home':
+                        const caption = document.getElementById("caption");
+                        const tname = document.createElement("h1");
+                        const tsec = document.createElement("h3");
+
+                        tname.innerHTML = '<?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?>';
+                        tsec.innerHTML = 'We Are Getting Married';
+                        caption.appendChild(tname);
+                        caption.appendChild(tsec);
+
+                        let _gname = '<?php echo $nama_undangan ?>';
+                        if (_gname) {
+                            const gname = document.getElementById("gname");
+                            const card = document.createElement("div");
+                            card.innerHTML = _gname + '<br> dan <br> Keluarga';
+                            card.classList.add("card", "card-guest");
+                            gname.appendChild(card);
+                        }
+                        break;
+                    case 'comments':
+                        loadComments(false, null);
+                        break;
+                    default:
+                        break;
+                }
+            }).catch(function(e) {
+                console.warn('Error!', e);
+            });
+        }
+
+        function sendData() {
+            event.preventDefault();
+
+            let nama = document.getElementById("nama").value;
+            let kehadiran = document.getElementById("kehadiran").value;
+            let komentar = document.getElementById("komentar").value;
             if (nama == '') {
-              alert("Kolom nama harap di isi.");
-              return false;
+                alert("Kolom nama harap di isi.");
+                return false;
             }
             if (kehadiran == '') {
-              alert("Kolom kehadiran harap di isi.");
-              return false;
+                alert("Kolom kehadiran harap di isi.");
+                return false;
             }
-          }
-
-          $.ajax({
-            type: "POST",
-            url: "service.php",
-            data: {
-              nama: nama,
-              kehadiran: kehadiran,
-              komentar: komentar,
-              opt: param
-            },
-            cache: false,
-            success: function(data) {
-              if (param == '0') {
-                $("#komentar-container").html(data);
-              }
-
-              if (data != '') {
-                if (param == '1')
-                  alert('Terima Kasih telah berkomentar :)');
-                // reload data
-                $("#komentar-container").html(data);
-                // reset field
-                $("#nama").val('');
-                $("#kehadiran").val('');
-                $("#komentar").val('');
-              } else {
-                if (param == '1')
-                  alert('Ooops, terjadi masalah!');
-              }
-            },
-            error: function(msg, status, error) {
-              console.error(msg);
-            }
-          });
+            loadComments(true, [nama, kehadiran, komentar]);
         }
-      });
+
+        fetchPages('home');
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                fetchPages(link.id)
+            });
+        });
+    </script>
+
+    <!-- Bottom Navbar listener -->
+    <script type="text/javascript">
+        let screen = window.matchMedia("(max-width: 780px)");
+        if (screen) {
+            let container = document.getElementById("navbot");
+            let nav = container.getElementsByClassName("nav-link");
+            for (let i = 0; i < nav.length; i++) {
+                nav[i].addEventListener("click", function() {
+                    let current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
+        }
     </script>
 </body>
 

@@ -12,10 +12,6 @@ $configs = [
     'nick_wanita' => 'Wanita',
     'nama_pria' => 'Penganten Pria',
     'nama_wanita' => 'Penganten Wanita',
-    'tgl_akad' => 'Minggu, 23 Juli 2023',
-    'alamat_akad' => 'Jl. Kedukan, Kertapati, Palembang',
-    'tgl_resepsi' => 'Minggu, 23 Juli 2023',
-    'alamat_resepsi' => 'Jl. Kedukan, Kertapati, Palembang'
 ];
 
 foreach ($configs as $con => $value) {

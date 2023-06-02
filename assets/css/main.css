@@ -1,11 +1,8 @@
 body,
 html {
-  height: 100%;
-  margin: 0;
-  padding: 0;
   font-family: "Outfit", "Open Sans", Arial, sans-serif;
   color: #5c5c5c;
-  background-color: #292929;
+  background-color: #ffffff;
   font-size: 16px !important;
 }
 
@@ -15,22 +12,20 @@ h1 {
 }
 
 .caption {
-  position: absolute;
-  left: 0;
-  top: 35%;
+  position: relative;
+  top: 10px;
   width: 100%;
   text-align: center;
   color: #eeeeee;
 }
 
 .bg-image {
-  background-image: url(../images/example.jpg);
+  background-image: url(../images/cover.jpg);
   height: 100vh;
-  width: 100%;
+  width: 35%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 0px 3px 0px 0px rgba(146, 51, 107, 0.2);
 }
 
 .visible {
@@ -38,16 +33,26 @@ h1 {
 }
 
 .card-guest {
-  width: 20%;
-  bottom: -180px;
-  margin: 25px;
-  color: rgb(247, 247, 247);
+  position: absolute;
   border-radius: 16px;
   padding: 8px;
+  width: 20%;
+  bottom: 0;
+  margin-bottom: 8px;
+  text-align: center;
+  color: whitesmoke !important;
   background-color: #00000063;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 780px) and (orientation: portrait) {
+  .bg-image {
+    width: 100%;
+  }
+
+  .caption {
+    top: 25px !important;
+  }
+
   .visible {
     display: block !important;
   }
@@ -57,15 +62,10 @@ h1 {
   }
 
   .card-guest {
-    bottom: -200px;
     width: 75%;
     height: 85px;
+    bottom: 60px;
   }
-}
-
-.card {
-  border-color: #c5446f;
-  box-shadow: 0px 4px 4px 0px rgba(155, 59, 115, 0.2);
 }
 
 .scrollable {
@@ -77,22 +77,7 @@ h1 {
   -webkit-overflow-scrolling: touch;
 }
 
-.form-control:focus {
-  border-color: #c5446f;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #c5446f;
-}
-
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited {
-  background-color: #c5446f !important;
-  border-color: #c5446f !important;
-}
-
-footer {
-  background-color: #5c5c5c;
-  text-align: center;
-  color: beige;
-  border-radius: 4px;
+.cont-container {
+  margin: 10px 4px 10px 4px;
+  padding-bottom: 75px;
 }
