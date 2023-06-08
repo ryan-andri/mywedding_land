@@ -5,7 +5,6 @@ require_once('configs/config.php');
 $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 ?>
 
-
 <!doctype html>
 <html lang="en">
 
@@ -14,10 +13,12 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Outfit" rel="stylesheet" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- Main style -->
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
@@ -42,6 +43,12 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     </svg>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" id="ctrl-music">
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="comments">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
@@ -60,6 +67,14 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         </ul>
     </nav>
 
+    <div class="min-vh-100 d-flex flex-column d-none" id="loading">
+        <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <div class="spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Content -->
     <div id="content">
         <!-- content -->
@@ -69,9 +84,53 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
-    <!-- Bottom Navbar listener -->
+    <!-- Index -->
     <script type="text/javascript">
+        // audio
+        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'assets/music/music.mp3');
+        xhr.responseType = 'arraybuffer';
+        xhr.addEventListener('load', () => {
+            let playsound = (audioBuffer) => {
+                let source = audioCtx.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(audioCtx.destination);
+                source.loop = true;
+                source.start();
+            };
+            audioCtx.decodeAudioData(xhr.response).then(playsound);
+        });
+        xhr.send();
+
+        console.log(audioCtx.state);
+
+        function controlMusic() {
+            if (audioCtx.state === "running") {
+                audioCtx.suspend().then(() => {
+                    console.log(audioCtx.state);
+                })
+            } else if (audioCtx.state === "suspended") {
+                audioCtx.resume().then(() => {
+                    console.log(audioCtx.state);
+                })
+            }
+        }
+
+        function loadLoading(set) {
+            let loading = document.getElementById("loading");
+            if (set) {
+                loading.classList.remove("d-none");
+            } else {
+                loading.classList.add("d-none");
+            }
+        }
         async function loadComments(_submit, form) {
+            // show load when submit
+            if (_submit) {
+                loadLoading(true);
+            }
+            // create POST
             let fd = new FormData();
             if (!form) {
                 fd.append('nama', '');
@@ -93,8 +152,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 // avoid duplicate
                 _comments.innerHTML = '';
                 // proc the data
-                if (data) {
-                    data.forEach(element => {
+                if (data['result']) {
+                    data['data'].forEach(element => {
                         const _card = document.createElement("div");
                         _card.classList.add("card", "border-dark", "m-2");
 
@@ -123,7 +182,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         _commentBox.innerHTML = element.komentar;
                         _cardBody.parentNode.insertBefore(_commentBox, _cardBody.next)
 
-                        // append to container
+                        // append parent
                         _comments.appendChild(_card);
                     });
 
@@ -141,38 +200,56 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     const _p = document.createElement("p");
                     _p.innerHTML = "Belum ada komentar!";
                     _div.appendChild(_p);
-                    // append all
+                    // append parent
                     _comments.appendChild(_div);
+                }
+                // kill loading
+                if (_submit) {
+                    loadLoading(false);
                 }
             }).catch(function(e) {
                 console.warn('Error!', e);
+                // kill loading
+                if (_submit) {
+                    loadLoading(false);
+                }
             });
         }
 
         async function fetchPages(opt) {
+            document.getElementById("content").innerHTML = '';
+            loadLoading(true);
             await fetch('pages/' + opt + '.html').then(function(response) {
                 return response.text();
             }).then(function(data) {
-
                 document.getElementById("content").innerHTML = data;
-
                 switch (opt) {
                     case 'home':
                         const caption = document.getElementById("caption");
                         const tname = document.createElement("h1");
                         const tsec = document.createElement("h3");
 
+                        tname.classList.add('animate__animated', 'animate__zoomIn');
+                        tsec.classList.add('animate__animated', 'animate__slideInUp');
+
                         tname.innerHTML = '<?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?>';
                         tsec.innerHTML = 'We Are Getting Married';
                         caption.appendChild(tname);
                         caption.appendChild(tsec);
 
-                        let _gname = '<?php echo $nama_undangan ?>';
+                        let _gname = '<?php echo $nama_undangan; ?>';
                         if (_gname) {
                             const gname = document.getElementById("gname");
                             const card = document.createElement("div");
-                            card.innerHTML = _gname + '<br> dan <br> Keluarga';
+                            card.classList.add('animate__animated', 'animate__slideInUp');
                             card.classList.add("card", "card-guest");
+
+                            const _text = document.createElement("div");
+                            _text.style = "font-size: 16px";
+                            _text.innerHTML = _gname + '<br> dan <br> Keluarga';
+                            // append child
+                            card.appendChild(_text);
+                            // append Parent
                             gname.appendChild(card);
                         }
                         break;
@@ -182,22 +259,25 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     default:
                         break;
                 }
+                loadLoading(false);
             }).catch(function(e) {
                 console.warn('Error!', e);
+                loadLoading(false);
             });
         }
 
         function sendData() {
             event.preventDefault();
-
             let nama = document.getElementById("nama").value;
             let kehadiran = document.getElementById("kehadiran").value;
             let komentar = document.getElementById("komentar").value;
-            if (nama == '') {
+            // No only Spaces
+            if (nama.trim().length == 0) {
                 alert("Kolom nama harap di isi.");
                 return false;
             }
-            if (kehadiran == '') {
+            // No only Spaces
+            if (kehadiran.trim().length == 0) {
                 alert("Kolom kehadiran harap di isi.");
                 return false;
             }
@@ -207,7 +287,11 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         fetchPages('home');
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', (e) => {
-                fetchPages(link.id)
+                if (link.id != "ctrl-music") {
+                    fetchPages(link.id);
+                } else {
+                    controlMusic();
+                }
             });
         });
     </script>
@@ -226,6 +310,17 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 });
             }
         }
+        // auto refresh when rotate screen
+        window.onorientationchange = function() {
+            var orientation = window.orientation;
+            switch (orientation) {
+                case 0:
+                case 90:
+                case -90:
+                    window.location.reload();
+                    break;
+            }
+        };
     </script>
 </body>
 

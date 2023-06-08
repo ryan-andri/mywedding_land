@@ -9,7 +9,6 @@ if (empty($input_nama)) {
     loadKomentar();
 } else {
     try {
-
         $db = DBConnection::getInstance();
         $nama = htmlspecialchars($input_nama);
         $kehadiran = htmlspecialchars($input_kehadiran);
@@ -31,7 +30,10 @@ function loadKomentar()
         $db = DBConnection::getInstance();
         $que = $db->query('SELECT * FROM komentar ORDER BY id DESC');
         $rows = $que->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($rows ? $rows : null);
+        echo json_encode([
+            'result' => $rows ? true : false,
+            'data' => $rows
+        ]);
     } catch (PDOException $e) {
         die($e->getMessage());
     } catch (Exception $e) {

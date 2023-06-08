@@ -1,29 +1,41 @@
-<div class="cont-container">
-    <div class="card p-2 text-center">
-        <p class="text-beautify"><strong>Pesan dan Kesan</strong></p>
-        <!-- get -->
-        <div class="card scrollable mb-4">
-            <div id="comments-container"></div>
-        </div>
-
-        <!-- input -->
-        <form>
-            <div class="mb-2">
-                <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukan Nama" />
-            </div>
-            <div class="mb-2">
-                <select class="form-control" name="kehadiran" id="kehadiran">
-                    <option selected value="">Kehadiran ?</option>
-                    <option value="hadir">Hadir</option>
-                    <option value="tidak hadir">Tidak Hadir</option>
-                </select>
-            </div>
-            <div class="mb-2">
-                <textarea class="form-control" id="komentar" name="komentar" rows="4" placeholder="Silahkan beri komentar.."></textarea>
-            </div>
-            <button onclick="sendData()" class="btn btn-primary form-control">
-                Kirim
-            </button>
-        </form>
+<div class="static-bg">
+  <div class="p-2 text-center">
+    <p class="text-beautify"><strong>Pesan dan Kesan</strong></p>
+    <!-- get -->
+    <div class="card card-trans border-dark scrollable mb-2">
+      <div id="comments-container"></div>
     </div>
+
+    <!-- input -->
+    <form>
+      <div class="mb-2">
+        <input
+          type="text"
+          name="nama"
+          class="form-control"
+          id="nama"
+          placeholder="Masukan Nama"
+        />
+      </div>
+      <div class="mb-2">
+        <select class="form-control" name="kehadiran" id="kehadiran">
+          <option selected value="">Kehadiran ?</option>
+          <option value="hadir">Hadir</option>
+          <option value="tidak hadir">Tidak Hadir</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <textarea
+          class="form-control"
+          id="komentar"
+          name="komentar"
+          rows="4"
+          placeholder="Silahkan beri komentar.."
+        ></textarea>
+      </div>
+      <button onclick="sendData()" class="btn btn-primary form-control">
+        Kirim
+      </button>
+    </form>
+  </div>
 </div>

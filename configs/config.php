@@ -1,7 +1,4 @@
 <?php
-// block Cross Site Scripting attack, not really!
-header("X-XSS-Protection: 1; mode=block");
-
 // base path
 define('BASE_PATH', dirname(dirname(__FILE__)));
 
