@@ -44,7 +44,12 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 </a>
             </li>
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" id="ctrl-music"></a>
+                <a href="javascript:void(0)" class="nav-link" id="ctrl-music">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z" />
+                    </svg>
+                </a>
             </li>
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="comments">
@@ -88,7 +93,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         // audio
         var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'assets/music/music.mp3');
+        xhr.open('GET', 'assets/music/music.mp3', true);
         xhr.responseType = 'arraybuffer';
         xhr.addEventListener('load', () => {
             let playsound = (audioBuffer) => {
@@ -104,12 +109,15 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
         function ctlIcon(set) {
             let ctl = document.getElementById("ctrl-music");
+            ctl.innerHTML = '';
             if (set) {
+                // icon pause
                 ctl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">' +
                     '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>' +
                     '<path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/>' +
                     '</svg>'
             } else {
+                // icon play
                 ctl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">' +
                     '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>' +
                     '<path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>' +
@@ -311,8 +319,9 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', (e) => {
-                if (link.id != "ctrl-music") {
-                    fetchPages(link.id);
+                let page = link.id;
+                if (page != 'ctrl-music') {
+                    fetchPages(page);
                 } else {
                     controlMusic();
                 }
@@ -324,11 +333,14 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <script type="text/javascript">
         function confirmInvitation() {
             Swal.fire({
-                text: "Terima Kasih telah menyempatkan waktu berharganya",
+                html: '<p>Terima kasih telah menyempatkan waktunya yang berharga.</p>' +
+                    '<p class ="text-beautify">~ <?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?> ~</p>',
+                icon: 'info',
                 allowOutsideClick: false,
                 showCancelButton: false,
                 focusConfirm: false,
-                backdrop: '#FFFFFF',
+                backdrop: 'url(assets/images/bg.jpg)',
+                background: '#00000000',
                 confirmButtonColor: '#f8b0a9',
                 confirmButtonText: 'Buka Undangan'
             }).then((result) => {
