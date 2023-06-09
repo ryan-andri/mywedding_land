@@ -67,10 +67,6 @@ h1 {
     display: block !important;
   }
 
-  .visible-alert {
-    display: none !important;
-  }
-
   .card-guest {
     width: 75%;
     height: 85px;
@@ -98,4 +94,8 @@ h1 {
 
 .container {
   height: 100%;
+}
+
+.swal2-popup .swal2-styled:focus {
+  box-shadow: none !important;
 }

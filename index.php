@@ -29,7 +29,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link active" id="home">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                         <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
                     </svg>
@@ -37,28 +37,25 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             </li>
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="time">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
                         <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
                         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
                     </svg>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" id="ctrl-music">
-                </a>
+                <a href="javascript:void(0)" class="nav-link" id="ctrl-music"></a>
             </li>
-
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="comments">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
                         <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z" />
                     </svg>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" id="info">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                         <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                     </svg>
@@ -83,6 +80,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <!-- Bootstrap Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Index -->
     <script type="text/javascript">
@@ -103,17 +102,37 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         });
         xhr.send();
 
-        console.log(audioCtx.state);
+        function ctlIcon(set) {
+            let ctl = document.getElementById("ctrl-music");
+            if (set) {
+                ctl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">' +
+                    '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>' +
+                    '<path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/>' +
+                    '</svg>'
+            } else {
+                ctl.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">' +
+                    '<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>' +
+                    '<path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>' +
+                    '</svg>';
+            }
+        }
+
+        // force suspend on some browser ie : opera mini
+        if (audioCtx.state === "running") {
+            audioCtx.suspend().then(() => {
+                ctlIcon(false);
+            })
+        }
 
         function controlMusic() {
             if (audioCtx.state === "running") {
                 audioCtx.suspend().then(() => {
-                    console.log(audioCtx.state);
-                })
+                    ctlIcon(false);
+                });
             } else if (audioCtx.state === "suspended") {
                 audioCtx.resume().then(() => {
-                    console.log(audioCtx.state);
-                })
+                    ctlIcon(true);
+                });
             }
         }
 
@@ -190,7 +209,9 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         document.getElementById("nama").value = '';
                         document.getElementById("kehadiran").value = '';
                         document.getElementById("komentar").value = '';
-                        alert('Terima Kasih telah berkomentar :)');
+                        Swal.fire({
+                            text: "Terima Kasih telah berkomentar :)"
+                        });
                     }
                 } else {
                     // create div first
@@ -273,18 +294,21 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             let komentar = document.getElementById("komentar").value;
             // No only Spaces
             if (nama.trim().length == 0) {
-                alert("Kolom nama harap di isi.");
+                Swal.fire({
+                    text: "Kolom nama harap di isi."
+                });
                 return false;
             }
             // No only Spaces
             if (kehadiran.trim().length == 0) {
-                alert("Kolom kehadiran harap di isi.");
+                Swal.fire({
+                    text: "Kolom kehadiran harap di isi."
+                });
                 return false;
             }
             loadComments(true, [nama, kehadiran, komentar]);
         }
 
-        fetchPages('home');
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', (e) => {
                 if (link.id != "ctrl-music") {
@@ -298,8 +322,32 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
     <!-- Bottom Navbar listener -->
     <script type="text/javascript">
-        let screen = window.matchMedia("(max-width: 780px)");
+        function confirmInvitation() {
+            Swal.fire({
+                text: "Terima Kasih telah menyempatkan waktu berharganya",
+                allowOutsideClick: false,
+                showCancelButton: false,
+                focusConfirm: false,
+                backdrop: '#FFFFFF',
+                confirmButtonColor: '#f8b0a9',
+                confirmButtonText: 'Buka Undangan'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (audioCtx.state === "suspended") {
+                        audioCtx.resume().then(() => {
+                            ctlIcon(true);
+                        })
+                    }
+                    fetchPages('home');
+                }
+            })
+        }
+
+        let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
         if (screen) {
+            // trigger sa
+            confirmInvitation();
+            // trigger navbar listner
             let container = document.getElementById("navbot");
             let nav = container.getElementsByClassName("nav-link");
             for (let i = 0; i < nav.length; i++) {
@@ -309,6 +357,17 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     this.className += " active";
                 });
             }
+        } else {
+            let content = document.getElementById("content");
+            let main = document.createElement("div");
+            main.classList.add("min-vh-100", "d-flex", "flex-column");
+            let sec = document.createElement("div");
+            sec.classList.add("flex-grow-1", "d-flex", "align-items-center", "justify-content-center", "text-center", "p-2");
+            main.appendChild(sec);
+            let letter = document.createElement("p");
+            letter.innerHTML = "<strong>Buka dengan Smartphone anda untuk melihat full undangan atau Ubah orientasi layar Smartphone anda ke orientasi Portrait.</strong>";
+            sec.appendChild(letter);
+            content.append(main);
         }
         // auto refresh when rotate screen
         window.onorientationchange = function() {
