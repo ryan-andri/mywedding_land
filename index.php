@@ -11,7 +11,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 <head>
     <!-- Meta -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Outfit" rel="stylesheet" />
@@ -19,6 +19,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- animation -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <!-- Main style -->
     <link rel="stylesheet" href="assets/css/main.css" />
 </head>
@@ -87,6 +89,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Index -->
     <script type="text/javascript">
@@ -281,6 +285,15 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                             // append Parent
                             gname.appendChild(card);
                         }
+                        break;
+                    case 'time':
+                        const location = [<?php echo env('lat'); ?>, <?php echo env('long'); ?>];
+                        let map = L.map('lmap').setView(location, 16);
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 22,
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map);
+                        L.marker(location).addTo(map);
                         break;
                     case 'comments':
                         loadComments(false, null);

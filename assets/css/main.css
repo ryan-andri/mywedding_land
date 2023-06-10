@@ -99,3 +99,12 @@ h1 {
 .swal2-popup .swal2-styled:focus {
   box-shadow: none !important;
 }
+
+/* leaflet */
+#lmap {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 300px;
+  width: 100%;
+}

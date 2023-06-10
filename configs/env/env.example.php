@@ -12,6 +12,10 @@ $configs = [
     'nick_wanita' => 'Wanita',
     'nama_pria' => 'Penganten Pria',
     'nama_wanita' => 'Penganten Wanita',
+
+    // location map
+    'lat' => '40.712776',
+    'long' => '-74.005974'
 ];
 
 foreach ($configs as $con => $value) {
