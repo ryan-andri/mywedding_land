@@ -100,6 +100,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         loadLoading(true);
         // audio
         var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        var source = audioCtx.createBufferSource();
         window.addEventListener('load', () => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'assets/music/music.mp3');
@@ -128,14 +129,11 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 }
             }
             xhr.addEventListener('load', () => {
-                let playsound = (audioBuffer) => {
-                    let source = audioCtx.createBufferSource();
+                audioCtx.decodeAudioData(xhr.response).then((audioBuffer) => {
                     source.buffer = audioBuffer;
-                    source.connect(audioCtx.destination);
                     source.loop = true;
-                    source.start();
-                };
-                audioCtx.decodeAudioData(xhr.response).then(playsound);
+                    source.connect(audioCtx.destination);
+                });
             });
             xhr.send();
         }, false);
@@ -156,13 +154,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     '<path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>' +
                     '</svg>';
             }
-        }
-
-        // force suspend on some browser ie : opera mini
-        if (audioCtx.state === "running") {
-            audioCtx.suspend().then(() => {
-                ctlIcon(false);
-            })
         }
 
         function controlMusic() {
@@ -385,11 +376,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 confirmButtonText: 'Buka Undangan'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    if (audioCtx.state === "suspended") {
-                        audioCtx.resume().then(() => {
-                            ctlIcon(true);
-                        })
-                    }
+                    source.start();
+                    ctlIcon(true);
                     fetchPages('home');
                 }
             })
