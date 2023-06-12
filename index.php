@@ -27,7 +27,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light border-top navbar-expand fixed-bottom visible" id="navbot">
+    <nav class="navbar navbar-light bg-light border-top navbar-expand fixed-bottom d-none" id="navbot">
         <ul class="navbar-nav nav-justified w-100">
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link active" id="home">
@@ -94,6 +94,9 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
     <!-- Index -->
     <script type="text/javascript">
+        // get id Navbar
+        var navbar = document.getElementById("navbot");
+        // show loading first
         loadLoading(true);
         // audio
         var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
@@ -101,10 +104,27 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             let xhr = new XMLHttpRequest();
             xhr.open('GET', 'assets/music/music.mp3');
             xhr.responseType = 'arraybuffer';
+            xhr.timeout = 20000; // 20 Seconds timeout, detect slow connection!
+            xhr.ontimeout = () => {
+                Swal.fire({
+                    text: 'Koneksi anda terlalu lambat',
+                    icon: 'error',
+                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    backdrop: '#ffffff',
+                    background: '#ffffff',
+                    confirmButtonText: 'Muat Ulang'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                })
+            }
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    mainContent();
                     loadLoading(false);
+                    mainContent();
                 }
             }
             xhr.addEventListener('load', () => {
@@ -163,6 +183,14 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 loading.classList.remove("d-none");
             } else {
                 loading.classList.add("d-none");
+            }
+        }
+
+        function showNavbar(show) {
+            if (show) {
+                navbar.classList.remove("d-none");
+            } else {
+                navbar.classList.add("d-none");
             }
         }
 
@@ -374,8 +402,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 // trigger sa
                 confirmInvitation();
                 // trigger navbar listner
-                let container = document.getElementById("navbot");
-                let nav = container.getElementsByClassName("nav-link");
+                let nav = navbar.getElementsByClassName("nav-link");
                 for (let i = 0; i < nav.length; i++) {
                     nav[i].addEventListener("click", function() {
                         let current = document.getElementsByClassName("active");
@@ -394,10 +421,16 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         }
                     });
                 });
+
+                // show navbar
+                showNavbar(true);
             }
         }
 
         if (!screen) {
+            // hide navbar
+            showNavbar(false);
+            // contents non-responsive
             let content = document.getElementById("content");
             let main = document.createElement("div");
             main.classList.add("min-vh-100", "d-flex", "flex-column");
@@ -409,6 +442,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             sec.appendChild(letter);
             content.append(main);
         }
+
         // auto refresh when rotate screen
         window.onorientationchange = function() {
             var orientation = window.orientation;
