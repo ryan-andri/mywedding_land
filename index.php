@@ -316,6 +316,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         }
                         break;
                     case 'time':
+                        // leaflet map
                         const location = [<?php echo env('lat'); ?>, <?php echo env('long'); ?>];
                         let map = L.map('lmap').setView(location, 16);
                         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -323,6 +324,13 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
                         L.marker(location).addTo(map);
+                        // button gmap
+                        let gmap = document.getElementById("btn-gmap");
+                        let _a = document.createElement("a");
+                        _a.innerText = 'Buka Google Map'
+                        _a.href = '<?php echo env('gmap'); ?>';
+                        _a.classList.add("btn", "btn-primary", "form-control", "mt-2");
+                        gmap.appendChild(_a);
                         break;
                     case 'comments':
                         loadComments(false, null);

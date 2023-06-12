@@ -15,7 +15,9 @@ $configs = [
 
     // location map
     'lat' => '40.712776',
-    'long' => '-74.005974'
+    'long' => '-74.005974',
+    // share location from gmap
+    'gmap' => 'https://goo.gl/maps/abcdefghijklmn'
 ];
 
 foreach ($configs as $con => $value) {
