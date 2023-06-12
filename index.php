@@ -94,22 +94,31 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
 
     <!-- Index -->
     <script type="text/javascript">
+        loadLoading(true);
         // audio
         var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'assets/music/music.mp3', true);
-        xhr.responseType = 'arraybuffer';
-        xhr.addEventListener('load', () => {
-            let playsound = (audioBuffer) => {
-                let source = audioCtx.createBufferSource();
-                source.buffer = audioBuffer;
-                source.connect(audioCtx.destination);
-                source.loop = true;
-                source.start();
-            };
-            audioCtx.decodeAudioData(xhr.response).then(playsound);
-        });
-        xhr.send();
+        window.addEventListener('load', () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'assets/music/music.mp3');
+            xhr.responseType = 'arraybuffer';
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    mainContent();
+                    loadLoading(false);
+                }
+            }
+            xhr.addEventListener('load', () => {
+                let playsound = (audioBuffer) => {
+                    let source = audioCtx.createBufferSource();
+                    source.buffer = audioBuffer;
+                    source.connect(audioCtx.destination);
+                    source.loop = true;
+                    source.start();
+                };
+                audioCtx.decodeAudioData(xhr.response).then(playsound);
+            });
+            xhr.send();
+        }, false);
 
         function ctlIcon(set) {
             let ctl = document.getElementById("ctrl-music");
@@ -156,6 +165,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 loading.classList.add("d-none");
             }
         }
+
         async function loadComments(_submit, form) {
             // show load when submit
             if (_submit) {
@@ -329,17 +339,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             }
             loadComments(true, [nama, kehadiran, komentar]);
         }
-
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                let page = link.id;
-                if (page != 'ctrl-music') {
-                    fetchPages(page);
-                } else {
-                    controlMusic();
-                }
-            });
-        });
     </script>
 
     <!-- Bottom Navbar listener -->
@@ -369,20 +368,36 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         }
 
         let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
-        if (screen) {
-            // trigger sa
-            confirmInvitation();
-            // trigger navbar listner
-            let container = document.getElementById("navbot");
-            let nav = container.getElementsByClassName("nav-link");
-            for (let i = 0; i < nav.length; i++) {
-                nav[i].addEventListener("click", function() {
-                    let current = document.getElementsByClassName("active");
-                    current[0].className = current[0].className.replace(" active", "");
-                    this.className += " active";
+
+        function mainContent() {
+            if (screen) {
+                // trigger sa
+                confirmInvitation();
+                // trigger navbar listner
+                let container = document.getElementById("navbot");
+                let nav = container.getElementsByClassName("nav-link");
+                for (let i = 0; i < nav.length; i++) {
+                    nav[i].addEventListener("click", function() {
+                        let current = document.getElementsByClassName("active");
+                        current[0].className = current[0].className.replace(" active", "");
+                        this.className += " active";
+                    });
+                }
+
+                document.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        let page = link.id;
+                        if (page != 'ctrl-music') {
+                            fetchPages(page);
+                        } else {
+                            controlMusic();
+                        }
+                    });
                 });
             }
-        } else {
+        }
+
+        if (!screen) {
             let content = document.getElementById("content");
             let main = document.createElement("div");
             main.classList.add("min-vh-100", "d-flex", "flex-column");
