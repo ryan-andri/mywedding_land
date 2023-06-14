@@ -1,29 +1,64 @@
 <div class="static-bg">
   <div class="p-2 text-center">
     <img
-      class="img-fluid"
+      class="img-fluid animate__animated animate__zoomIn"
       src="assets/images/basmalah.svg"
       width="150"
       height="120"
     />
-    <p class="text-beautify"><strong>Assalamualaikum Wr. Wb</strong></p>
-    <div class="card card-trans border-dark mb-2">
-      <div class="card-body">
-        <p class="card-title text-center text-beautify">
-          <strong>Akad</strong>
-        </p>
-        <p>Minggu, 23 Juli 2023</p>
-        <p class="text-lg">Jl. Kedukan, Kertapati, Palembang</p>
+    <h3 class="text-beautify animate__animated animate__zoomIn">
+      <strong>Assalamualaikum Wr. Wb</strong>
+    </h3>
+    <!-- bride -->
+    <div
+      class="card card-trans border-dark mb-2 animate__animated animate__zoomIn"
+    >
+      <div class="text-center">
+        <img
+          class="img-fluid animate__animated animate__zoomIn"
+          src="assets/images/flower.svg"
+          width="130"
+          height="100"
+        />
       </div>
-    </div>
-    <div class="card card-trans border-dark mb-2">
       <div class="card-body">
-        <p class="card-title text-center text-beautify">
-          <strong>Resepsi</strong>
-        </p>
-        <p>Minggu, 23 Juli 2023</p>
-        <p class="text-lg">Jl. Kedukan, Kertapati, Palembang</p>
+        <div class="card-title text-center" id="bride"></div>
       </div>
+      <div class="text-center">
+        <img
+          class="img-fluid animate__animated animate__zoomIn"
+          src="assets/images/flower.svg"
+          width="130"
+          height="100"
+        />
+      </div>
+      <hr class="hr m-2" />
+      <div class="animate__animated animate__zoomIn" id="date-time"></div>
+      <hr class="hr m-2" />
+      <div class="row">
+        <div class="col">Akad</div>
+        <div class="col m-0 p-0" style="max-width: 4% !important;">
+          <div class="vr"></div>
+        </div>
+        <div class="col">Resepsi</div>
+      </div>
+      <hr class="hr m-2" />
+      <div class="row">
+        <div
+          class="col animate__animated animate__fadeInLeft"
+          id="time-akad"
+        ></div>
+        <div class="col m-0 p-0" style="max-width: 4% !important;">
+          <div class="vr"></div>
+        </div>
+        <div
+          class="col animate__animated animate__fadeInRight"
+          id="time-resepsi"
+        ></div>
+      </div>
+      <hr class="hr m-2" />
+      <div id="address"></div>
+      <hr class="hr m-2" />
     </div>
     <div id="lmap"></div>
     <div id="btn-gmap"></div>

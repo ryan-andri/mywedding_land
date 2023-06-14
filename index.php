@@ -14,7 +14,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Outfit" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- animation -->
@@ -139,7 +139,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         }, false);
 
         function ctlIcon(set) {
-            let ctl = document.getElementById("ctrl-music");
+            const ctl = document.getElementById("ctrl-music");
             ctl.innerHTML = '';
             if (set) {
                 // icon pause
@@ -169,7 +169,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         }
 
         function loadLoading(set) {
-            let loading = document.getElementById("loading");
+            const loading = document.getElementById("loading");
             if (set) {
                 loading.classList.remove("d-none");
             } else {
@@ -316,6 +316,29 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         }
                         break;
                     case 'time':
+                        // bride
+                        const bride = document.getElementById("bride");
+                        bride.innerHTML = '<h4 class="text-beautify animate__animated animate__fadeInLeft"><strong>' + '<?php echo env('nama_wanita'); ?>' + '</strong></h4>' +
+                            '<h6 class="animate__animated animate__fadeInLeft">' + '<?php echo env('dt_wanita'); ?>' + '</h6>' +
+                            '<h4 class="text-beautify animate__animated animate__zoomIn"><strong>&</strong></h4>' +
+                            '<h4 class="text-beautify animate__animated animate__fadeInRight"><strong>' + '<?php echo env('nama_pria'); ?>' + '</strong></h4>' +
+                            '<h6 class="animate__animated animate__fadeInRight">' + '<?php echo env('dt_pria'); ?>' + '</h6>';
+                        // date time
+                        const _date = document.getElementById("date-time");
+                        _date.innerHTML = '<strong>' + '<?php echo env('tgl_akad'); ?>' + '</strong>';
+                        // time akad/resepsi/address
+                        const _akad = document.getElementById("time-akad");
+                        _akad.innerHTML = '<?php echo env('waktu_akad'); ?>';
+                        const _resepsi = document.getElementById("time-resepsi");
+                        _resepsi.innerHTML = '<?php echo env('waktu_resepsi'); ?>';
+                        const _address = document.getElementById("address");
+                        let kediaman = document.createElement("p");
+                        kediaman.innerText = '<?php echo env('kediaman'); ?>';
+                        kediaman.classList.add("mb-0");
+                        let alamat = document.createElement("p");
+                        alamat.innerText = '<?php echo env('alamat_akad'); ?>';
+                        alamat.classList.add("mb-0");
+                        _address.append(kediaman, alamat);
                         // leaflet map
                         const location = [<?php echo env('lat'); ?>, <?php echo env('long'); ?>];
                         let map = L.map('lmap').setView(location, 16);
@@ -325,7 +348,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         }).addTo(map);
                         L.marker(location).addTo(map);
                         // button gmap
-                        let gmap = document.getElementById("btn-gmap");
+                        const gmap = document.getElementById("btn-gmap");
                         let _a = document.createElement("a");
                         _a.innerText = 'Buka Google Map'
                         _a.href = '<?php echo env('gmap'); ?>';
@@ -398,7 +421,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 // trigger sa
                 confirmInvitation();
                 // trigger navbar listner
-                let nav = navbar.getElementsByClassName("nav-link");
+                const nav = navbar.getElementsByClassName("nav-link");
                 for (let i = 0; i < nav.length; i++) {
                     nav[i].addEventListener("click", function() {
                         let current = document.getElementsByClassName("active");
@@ -427,7 +450,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             // hide navbar
             showNavbar(false);
             // contents non-responsive
-            let content = document.getElementById("content");
+            const content = document.getElementById("content");
             let main = document.createElement("div");
             main.classList.add("min-vh-100", "d-flex", "flex-column");
             let sec = document.createElement("div");
