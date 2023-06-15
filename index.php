@@ -124,7 +124,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             }
             xhr.onreadystatechange = () => {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
-                    loadLoading(false);
                     mainContent();
                 }
             }
@@ -278,34 +277,48 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             });
         }
 
+        // Preload Cover
+        function preloadCover() {
+            let img = new Image();
+            img.src = 'assets/images/cover.jpg';
+            return new Promise((done, fail) => {
+                img.onload = () => {
+                    done();
+                }
+                img.onerror = () => {
+                    fail(new Error('Failed to load image ' + url));
+                }
+            });
+        }
+
         async function fetchPages(opt) {
             document.getElementById("content").innerHTML = '';
             loadLoading(true);
             await fetch('pages/' + opt + '.html').then(function(response) {
                 return response.text();
-            }).then(function(data) {
-                document.getElementById("content").innerHTML = data;
+            }).then(async function(data) {
+                // wait Cover
+                await preloadCover();
+                // wait data
+                document.getElementById("content").innerHTML = await data;
                 switch (opt) {
                     case 'home':
+                        // create home content
                         const caption = document.getElementById("caption");
                         const tname = document.createElement("h1");
                         const tsec = document.createElement("h3");
-
                         tname.classList.add('animate__animated', 'animate__zoomIn');
                         tsec.classList.add('animate__animated', 'animate__slideInUp');
-
                         tname.innerHTML = '<?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?>';
                         tsec.innerHTML = 'We Are Getting Married';
                         caption.appendChild(tname);
                         caption.appendChild(tsec);
-
                         let _gname = '<?php echo $nama_undangan; ?>';
                         if (_gname) {
                             const gname = document.getElementById("gname");
                             const card = document.createElement("div");
                             card.classList.add('animate__animated', 'animate__slideInUp');
                             card.classList.add("card", "card-guest");
-
                             const _text = document.createElement("div");
                             _text.style = "font-size: 16px";
                             _text.innerHTML = _gname + '<br> dan <br> Keluarga';
@@ -350,7 +363,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         // button gmap
                         const gmap = document.getElementById("btn-gmap");
                         let _a = document.createElement("a");
-                        _a.innerText = 'Buka Google Map'
+                        _a.innerText = 'Buka Google Map';
                         _a.href = '<?php echo env('gmap'); ?>';
                         _a.classList.add("btn", "btn-primary", "form-control", "mt-2");
                         gmap.appendChild(_a);
@@ -417,6 +430,9 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
 
         function mainContent() {
+            // kill loading
+            loadLoading(false);
+
             if (screen) {
                 // trigger sa
                 confirmInvitation();
