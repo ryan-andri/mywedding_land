@@ -16,11 +16,14 @@ h1 {
   width: 100%;
   text-align: center;
   color: #eeeeee;
+  top: 20px !important;
 }
 
 .bg-image {
   background-image: url(../images/cover.jpg);
-  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -28,56 +31,43 @@ h1 {
 
 .static-bg {
   min-height: 100vh;
-  padding-bottom: 65px;
+  padding-bottom: 55px;
   background-image: url(../images/bg.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
+  z-index: -1;
+}
+
+.card {
+  border-radius: 16px;
 }
 
 .card-guest {
   position: absolute;
-  border-radius: 16px;
   padding: 8px;
-  width: 30%;
   bottom: 0;
   position: fixed;
-  margin-bottom: 8px;
   text-align: center;
   color: whitesmoke !important;
   background-color: #00000063;
+  width: 75%;
+  height: 85px;
+  margin-bottom: 68px;
 }
 
-@media screen and (max-width: 780px) and (orientation: portrait) {
-  .bg-image {
-    width: 100%;
-    position: fixed;
-  }
-
-  .caption {
-    top: 20px !important;
-  }
-
-  .card-guest {
-    width: 75%;
-    height: 85px;
-    margin-bottom: 68px;
-  }
-}
-
-.scrollable {
+.scrollable,
+.story-box {
   height: 225px;
   overflow-y: scroll;
   text-align: left;
-  box-shadow: 0 0 0 0;
   display: block;
   -webkit-overflow-scrolling: touch;
 }
 
-.const-container {
-  /* margin: 10px 4px 10px 4px; */
-  padding-bottom: 65px;
+.story-box {
+  height: 400px !important;
 }
 
 .card-trans {
