@@ -17,8 +17,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- Animation On Scoll -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <!-- Main style -->
@@ -89,17 +87,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <!-- sweet alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Animation On Scoll -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-    <!-- Animation On Scoll -->
-    <script type="text/javascript">
-        AOS.init({
-            duration: 750
-        });
-    </script>
 
     <!-- Index -->
     <script type="text/javascript">
@@ -215,7 +204,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 method: "POST"
             }).then(function(response) {
                 return response.json();
-            }).then(function(data) {
+            }).then(async function(data) {
                 const _comments = document.getElementById("comments-container");
                 // avoid duplicate
                 _comments.innerHTML = '';
@@ -316,9 +305,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         const caption = document.getElementById("caption");
                         const tname = document.createElement("h1");
                         const tsec = document.createElement("h3");
-
-                        tname.setAttribute('data-aos', 'zoom-in');
-                        tsec.setAttribute('data-aos', 'zoom-in');
                         tname.innerHTML = '<?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?>';
                         tsec.innerHTML = 'We Are Getting Married';
                         caption.appendChild(tname);
@@ -327,7 +313,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         if (_gname) {
                             const gname = document.getElementById("gname");
                             const card = document.createElement("div");
-                            card.setAttribute('data-aos', 'fade-up');
                             card.classList.add("card", "card-guest");
                             const _text = document.createElement("div");
                             _text.style = "font-size: 16px";
@@ -341,11 +326,11 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                     case 'time':
                         // bride
                         const bride = document.getElementById("bride");
-                        bride.innerHTML = '<h4 class="text-beautify" data-aos="fade-right"><strong>' + '<?php echo env('nama_wanita'); ?>' + '</strong></h4>' +
-                            '<h6 data-aos="fade-right">' + '<?php echo env('dt_wanita'); ?>' + '</h6>' +
-                            '<h4 class="text-beautify" data-aos="zoom-in"><strong>&</strong></h4>' +
-                            '<h4 class="text-beautify" data-aos="fade-left"><strong>' + '<?php echo env('nama_pria'); ?>' + '</strong></h4>' +
-                            '<h6 data-aos="fade-left">' + '<?php echo env('dt_pria'); ?>' + '</h6>';
+                        bride.innerHTML = '<h4 class="text-beautify"><strong>' + '<?php echo env('nama_wanita'); ?>' + '</strong></h4>' +
+                            '<h6>' + '<?php echo env('dt_wanita'); ?>' + '</h6>' +
+                            '<h4 class="text-beautify"><strong>&</strong></h4>' +
+                            '<h4 class="text-beautify"><strong>' + '<?php echo env('nama_pria'); ?>' + '</strong></h4>' +
+                            '<h6>' + '<?php echo env('dt_pria'); ?>' + '</h6>';
                         // date time
                         const _date = document.getElementById("date-time");
                         _date.innerHTML = '<strong>' + '<?php echo env('tgl_akad'); ?>' + '</strong>';
@@ -375,6 +360,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         let _a = document.createElement("a");
                         _a.innerText = 'Buka Google Map';
                         _a.href = '<?php echo env('gmap'); ?>';
+                        _a.target = '_blank';
                         _a.classList.add("btn", "btn-primary", "form-control", "mt-2");
                         gmap.appendChild(_a);
                         // story
@@ -382,7 +368,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         stbox.innerHTML = '<?php echo env('story_box'); ?>';
                         break;
                     case 'comments':
-                        loadComments(false, null);
+                        await loadComments(false, null);
                         break;
                     default:
                         break;
@@ -394,7 +380,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             });
         }
 
-        function sendData() {
+        async function sendData() {
             event.preventDefault();
             let nama = document.getElementById("nama").value;
             let kehadiran = document.getElementById("kehadiran").value;
@@ -402,18 +388,20 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             // No only Spaces
             if (nama.trim().length == 0) {
                 Swal.fire({
-                    text: "Kolom nama harap di isi."
+                    text: "Kolom nama harap di isi.",
+                    confirmButtonColor: '#ff8fa0',
                 });
                 return false;
             }
             // No only Spaces
             if (kehadiran.trim().length == 0) {
                 Swal.fire({
-                    text: "Kolom kehadiran harap di isi."
+                    text: "Kolom kehadiran harap di isi.",
+                    confirmButtonColor: '#ff8fa0',
                 });
                 return false;
             }
-            loadComments(true, [nama, kehadiran, komentar]);
+            await loadComments(true, [nama, kehadiran, komentar]);
         }
     </script>
 
@@ -429,7 +417,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 focusConfirm: false,
                 backdrop: 'url(assets/images/bg.jpg)',
                 background: '#00000000',
-                confirmButtonColor: '#f8b0a9',
+                confirmButtonColor: '#ff8fa0',
                 confirmButtonText: 'Buka Undangan'
             }).then((result) => {
                 if (result.isConfirmed) {
