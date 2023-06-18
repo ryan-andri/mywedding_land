@@ -17,6 +17,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- css animation -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <!-- Main style -->
@@ -307,6 +309,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         const tsec = document.createElement("h3");
                         tname.innerHTML = '<?php echo env('nick_wanita'); ?> & <?php echo env('nick_pria'); ?>';
                         tsec.innerHTML = 'We Are Getting Married';
+                        caption.classList.add("animate__animated", "animate__slideInDown", "animate__fast");
                         caption.appendChild(tname);
                         caption.appendChild(tsec);
                         let _gname = '<?php echo $nama_undangan; ?>';
@@ -314,6 +317,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                             const gname = document.getElementById("gname");
                             const card = document.createElement("div");
                             card.classList.add("card", "card-guest");
+                            card.classList.add("animate__animated", "animate__zoomIn", "animate__fast");
                             const _text = document.createElement("div");
                             _text.style = "font-size: 16px";
                             _text.innerHTML = _gname + '<br> dan <br> Keluarga';
@@ -341,7 +345,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         _resepsi.innerHTML = '<?php echo env('waktu_resepsi'); ?>';
                         const _address = document.getElementById("address");
                         let kediaman = document.createElement("p");
-                        kediaman.innerText = '<?php echo env('kediaman'); ?>';
+                        kediaman.innerHTML = '<strong>' + '<?php echo env('kediaman'); ?>' + '</strong>';
                         kediaman.classList.add("mb-0");
                         let alamat = document.createElement("p");
                         alamat.innerText = '<?php echo env('alamat_akad'); ?>';
@@ -428,6 +432,19 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             })
         }
 
+        function animationListener() {
+            let anim = document.querySelectorAll("#sanim");
+            for (let i = 0; i < anim.length; i++) {
+                let height = window.innerHeight;
+                let top = anim[i].getBoundingClientRect().top;
+                if (top <= height) {
+                    anim[i].classList.add("animate__animated", "animate__slideInLeft", "animate__fast");
+                } else {
+                    anim[i].classList.remove("animate__animated", "animate__slideInLeft", "animate__fast");
+                }
+            }
+        }
+
         let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
 
         function mainContent() {
@@ -457,6 +474,8 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         }
                     });
                 });
+
+                window.addEventListener("scroll", animationListener);
 
                 // show navbar
                 showNavbar(true);
