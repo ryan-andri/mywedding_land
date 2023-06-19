@@ -185,6 +185,73 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             }
         }
 
+        function showComments(res, _submit, stat) {
+            // container
+            const _comments = document.getElementById("comments-container");
+            // avoid duplicate
+            _comments.innerHTML = '';
+            // show empty comments if unavailable
+            if (!res['data']) {
+                // create div first
+                const _div = document.createElement("div");
+                _div.classList.add("d-flex", "align-items-center", "justify-content-center", "mt-4");
+                // append paragraph in created div
+                const _p = document.createElement("p");
+                _p.innerHTML = "Belum ada komentar!";
+                _div.appendChild(_p);
+                // append parent
+                _comments.appendChild(_div);
+                return;
+            }
+            // process data if available
+            res['data'].forEach(element => {
+                const _card = document.createElement("div");
+                _card.classList.add("card", "border-dark", "m-2");
+
+                const _cardBody = document.createElement("div");
+                _cardBody.classList.add("ms-2", "me-2", "mt-2");
+                _card.appendChild(_cardBody);
+
+                // name
+                const _title = document.createElement("div");
+                _title.classList.add("float-start");
+                _title.style = "font-size: 12px";
+                _title.innerHTML = "<strong>" + element.nama + "</strong>";
+                _cardBody.appendChild(_title);
+
+                // presence
+                const _presence = document.createElement("span");
+                _presence.classList.add("float-end");
+                _presence.style = "font-size: 12px";
+                _presence.innerHTML = element.kehadiran;
+                _title.parentNode.insertBefore(_presence, _title.nextSibling);
+
+                // comments
+                const _commentBox = document.createElement("div");
+                _commentBox.classList.add("ms-2", "me-2", "mb-2");
+                _commentBox.style = "font-size: 12px";
+                _commentBox.innerHTML = element.komentar;
+                _cardBody.parentNode.insertBefore(_commentBox, _cardBody.next)
+
+                // append parent
+                _comments.appendChild(_card);
+            });
+
+            if (_submit && (stat == 'success')) {
+                document.getElementById("nama").value = '';
+                document.getElementById("kehadiran").value = '';
+                document.getElementById("komentar").value = '';
+                Swal.fire({
+                    text: "Terima Kasih telah berkomentar :)",
+                    icon: 'success'
+                });
+            } else if (_submit && (stat == 'spam')) {
+                document.getElementById("nama").value = '';
+                document.getElementById("kehadiran").value = '';
+                document.getElementById("komentar").value = '';
+            }
+        }
+
         async function loadComments(_submit, form) {
             // show load when submit
             if (_submit) {
@@ -208,62 +275,31 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             }).then(function(response) {
                 return response.json();
             }).then(async function(data) {
-                const _comments = document.getElementById("comments-container");
-                // avoid duplicate
-                _comments.innerHTML = '';
-                // proc the data
-                if (data['result']) {
-                    data['data'].forEach(element => {
-                        const _card = document.createElement("div");
-                        _card.classList.add("card", "border-dark", "m-2");
-
-                        const _cardBody = document.createElement("div");
-                        _cardBody.classList.add("ms-2", "me-2", "mt-2");
-                        _card.appendChild(_cardBody);
-
-                        // name
-                        const _title = document.createElement("div");
-                        _title.classList.add("float-start");
-                        _title.style = "font-size: 12px";
-                        _title.innerHTML = "<strong>" + element.nama + "</strong>";
-                        _cardBody.appendChild(_title);
-
-                        // presence
-                        const _presence = document.createElement("span");
-                        _presence.classList.add("float-end");
-                        _presence.style = "font-size: 12px";
-                        _presence.innerHTML = element.kehadiran;
-                        _title.parentNode.insertBefore(_presence, _title.nextSibling);
-
-                        // comments
-                        const _commentBox = document.createElement("div");
-                        _commentBox.classList.add("ms-2", "me-2", "mb-2");
-                        _commentBox.style = "font-size: 12px";
-                        _commentBox.innerHTML = element.komentar;
-                        _cardBody.parentNode.insertBefore(_commentBox, _cardBody.next)
-
-                        // append parent
-                        _comments.appendChild(_card);
-                    });
-
-                    if (_submit) {
-                        document.getElementById("nama").value = '';
-                        document.getElementById("kehadiran").value = '';
-                        document.getElementById("komentar").value = '';
-                        Swal.fire({
-                            text: "Terima Kasih telah berkomentar :)"
-                        });
-                    }
-                } else {
-                    // create div first
-                    const _div = document.createElement("div");
-                    _div.classList.add("d-flex", "align-items-center", "justify-content-center", "mt-4");
-                    // append paragraph in created div
-                    const _p = document.createElement("p");
-                    _p.innerHTML = "Belum ada komentar!";
-                    _div.appendChild(_p);
-                    // append parent
-                    _comments.appendChild(_div);
+                let res = await data;
+                switch (res['result']) {
+                    case 'spam':
+                        if (_submit) {
+                            Swal.fire({
+                                text: "Spam detected, tunggu 30 menit setelah berkomentar!",
+                                icon: 'info'
+                            });
+                        }
+                        showComments(res, _submit, 'spam');
+                        break;
+                    case 'success':
+                        showComments(res, _submit, 'success');
+                        break;
+                    case 'failed':
+                        if (_submit) {
+                            Swal.fire({
+                                text: "Ada kesalahan, silahkan hubungi admin!",
+                                icon: 'error'
+                            });
+                        }
+                        showComments(res, _submit, 'failed');
+                        break;
+                    default:
+                        break;
                 }
                 // kill loading
                 if (_submit) {
