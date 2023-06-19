@@ -12,6 +12,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet" />
