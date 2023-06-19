@@ -41,7 +41,7 @@ h1 {
 }
 
 .card {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .card-guest {
@@ -78,10 +78,6 @@ h1 {
   background-color: #00000000;
 }
 
-.container {
-  height: 100%;
-}
-
 .swal2-popup .swal2-styled:focus {
   box-shadow: none !important;
 }
@@ -91,12 +87,26 @@ h1 {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #ff8fa0;
 }
 
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:visited {
+
+.btn-primary {
   background-color: #ff8fa0 !important;
   border-color: #ff8fa0 !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: #757575 !important;
+  border-color: #757575 !important;
+}
+
+.btn-primary:visited {
+  background-color: #dac281 !important;
+  border-color: #dac281 !important;
+}
+
+.scroll-container {
+  max-height: 300px; /* Set a maximum height for the container */
+  overflow-y: scroll; /* Enable vertical scrolling */
 }
 
 /* leaflet */

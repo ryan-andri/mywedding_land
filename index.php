@@ -234,7 +234,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         _presence.innerHTML = element.kehadiran;
                         _title.parentNode.insertBefore(_presence, _title.nextSibling);
 
-                        // presence
+                        // comments
                         const _commentBox = document.createElement("div");
                         _commentBox.classList.add("ms-2", "me-2", "mb-2");
                         _commentBox.style = "font-size: 12px";
@@ -359,19 +359,22 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
                         L.marker(location).addTo(map);
-                        // button gmap
-                        const gmap = document.getElementById("btn-gmap");
-                        let _a = document.createElement("a");
-                        _a.innerText = 'Buka Google Map';
-                        _a.href = '<?php echo env('gmap'); ?>';
-                        _a.target = '_blank';
-                        _a.classList.add("btn", "btn-primary", "form-control", "mt-2");
-                        gmap.appendChild(_a);
                         // story
                         const stbox = document.getElementById("story-box");
                         stbox.innerHTML = '<?php echo env('story_box'); ?>';
                         break;
                     case 'comments':
+                        const card_w = document.getElementById("card_wanita");
+                        const an_w = document.getElementById("an_wanita");
+                        card_w.value = '<?php echo env('card_wanita'); ?>';
+                        card_w.innerText = '<?php echo env('card_wanita'); ?>';
+                        an_w.innerText = 'a\/n ' + '<?php echo env('an_wanita'); ?>';
+                        const card_p = document.getElementById("card_pria");
+                        const an_p = document.getElementById("an_pria");
+                        card_p.value = '<?php echo env('card_pria'); ?>';
+                        card_p.innerText = '<?php echo env('card_pria'); ?>';
+                        an_p.innerText = 'a\/n ' + '<?php echo env('an_pria'); ?>';
+                        // load comments
                         await loadComments(false, null);
                         break;
                     default:
@@ -393,7 +396,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             if (nama.trim().length == 0) {
                 Swal.fire({
                     text: "Kolom nama harap di isi.",
-                    confirmButtonColor: '#ff8fa0',
+                    confirmButtonColor: '#ff8fa0'
                 });
                 return false;
             }
@@ -401,11 +404,35 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
             if (kehadiran.trim().length == 0) {
                 Swal.fire({
                     text: "Kolom kehadiran harap di isi.",
-                    confirmButtonColor: '#ff8fa0',
+                    confirmButtonColor: '#ff8fa0'
                 });
                 return false;
             }
             await loadComments(true, [nama, kehadiran, komentar]);
+        }
+
+        function c2cb(ids) {
+            let input = document.querySelector('#' + ids);
+            let isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
+            if (isiOSDevice) {
+                let range = document.createRange();
+                range.selectNodeContents(input);
+                let selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                input.setSelectionRange(0, 999999);
+            } else {
+                input.select();
+            }
+            document.execCommand('copy');
+            Swal.fire({
+                text: "Tersalin",
+                confirmButtonColor: '#ff8fa0'
+            });
+        }
+
+        function btnGmap() {
+            window.open('<?php echo env('gmap'); ?>', '_blank');
         }
     </script>
 

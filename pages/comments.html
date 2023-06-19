@@ -5,24 +5,42 @@
       <h3 class="mt-2 text-beautify"><strong>Dompet Online</strong></h3>
       <div class="card card-trans border-dark p-2 mb-2">
         <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+          <img class="img-fluid" src="assets/images/wallet.svg" width="35" height="10" />
+        </div>
+        <div class="card card-trans border-dark p-2 mt-2">
+          <div class="text-center">
+            <img class="img-fluid" src="assets/images/Bank_Mandiri_logo_2016.svg" width="85" height="50" />
+          </div>
+          <div class="card-body">
+            <input class="form-control mb-2" id="card_wanita" style="text-align: center;" readonly="true" />
+            <h6 id="card_wanita"></h6>
+            <h6 id="an_wanita"></h6>
+            <button onclick="c2cb('card_wanita')" class="btn btn-primary">
+              Salin
+            </button>
+          </div>
+        </div>
+        <div class="text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ff8fa0" class="bi bi-three-dots"
             viewBox="0 0 16 16">
             <path
               d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
           </svg>
         </div>
-        <div class="card border-dark scrollable">
+        <div class="card card-trans border-dark p-2">
+          <div class="text-center">
+            <img class="img-fluid" src="assets/images/BANK_BRI_logo.svg" width="85" height="50" />
+          </div>
+          <div class="card-body">
+            <input class="form-control mb-2" id="card_pria" style="text-align: center;" readonly="true" />
+            <h6 id="an_pria"></h6>
+            <button onclick="c2cb('card_pria')" class="btn btn-primary">
+              Salin
+            </button>
+          </div>
         </div>
         <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
-            viewBox="0 0 16 16">
-            <path
-              d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-          </svg>
-        </div>
-
-        <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ff8fa0" class="bi bi-three-dots"
             viewBox="0 0 16 16">
             <path
               d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
@@ -35,7 +53,7 @@
       <h3 class="mt-4 text-beautify"><strong>Pesan dan Kesan</strong></h3>
       <div class="card card-trans border-dark p-2 mb-2">
         <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ff8fa0" class="bi bi-three-dots"
             viewBox="0 0 16 16">
             <path
               d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
@@ -45,7 +63,7 @@
           <div id="comments-container"></div>
         </div>
         <div class="text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ff8fa0" class="bi bi-three-dots"
             viewBox="0 0 16 16">
             <path
               d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
@@ -68,7 +86,7 @@
               placeholder="Silahkan beri komentar.."></textarea>
           </div>
           <div class="text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots"
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ff8fa0" class="bi bi-three-dots"
               viewBox="0 0 16 16">
               <path
                 d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />

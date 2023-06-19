@@ -22,6 +22,11 @@ $configs = [
     'long' => '-74.005974',
     // share location from gmap
     'gmap' => 'https://goo.gl/maps/abcdefghijklmn',
+    // Bank account number
+    'card_wanita' => '1234567890',
+    'an_wanita' => 'Atas Nama ?',
+    'card_pria' => '1234567890',
+    'an_pria' => 'Atas Nama ?',
 
     // bride
     'nama_wanita' => 'Nama Lengkap Wanita',
