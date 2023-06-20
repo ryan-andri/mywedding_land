@@ -2,19 +2,23 @@
 require_once('configs/config.php');
 date_default_timezone_set('Asia/Jakarta');
 
-$clientIP = $_SERVER['REMOTE_ADDR'];
+$clientIP = md5($_SERVER['REMOTE_ADDR']);
 $input_nama = !empty($_POST["nama"]) ? $_POST["nama"] : '';
 $input_kehadiran = !empty($_POST["kehadiran"]) ? $_POST["kehadiran"] : '';
 $input_komentar = !empty($_POST["komentar"]) ? $_POST["komentar"] : '';
 
-// mitigate spam
+// initial DB PDO
 $db = DBConnection::getInstance();
-$query = $db->prepare("SELECT * FROM komentar WHERE ip_client = ? AND exp_periode > NOW()");
-$query->execute([$clientIP]);
-$res = $query->rowCount() > 0;
-if ($res && $input_nama) {
-    loadKomentar(true);
-    exit;
+
+// mitigate spam
+if ($input_nama) {
+    $query = $db->prepare("SELECT * FROM komentar WHERE ip_client = ? AND exp_periode > NOW()");
+    $query->execute([$clientIP]);
+    $res = $query->rowCount() > 0;
+    if ($res) {
+        loadKomentar(true);
+        exit;
+    }
 }
 
 if (empty($input_nama)) {
