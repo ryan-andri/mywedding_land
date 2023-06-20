@@ -2,7 +2,6 @@
 require_once('configs/config.php');
 date_default_timezone_set('Asia/Jakarta');
 
-$clientIP = md5($_SERVER['REMOTE_ADDR']);
 $input_nama = !empty($_POST["nama"]) ? $_POST["nama"] : '';
 $input_kehadiran = !empty($_POST["kehadiran"]) ? $_POST["kehadiran"] : '';
 $input_komentar = !empty($_POST["komentar"]) ? $_POST["komentar"] : '';
@@ -11,6 +10,18 @@ $input_komentar = !empty($_POST["komentar"]) ? $_POST["komentar"] : '';
 $db = DBConnection::getInstance();
 
 // mitigate spam
+$clientIP = md5(getIpClient());
+function getIpClient()
+{
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        return trim($ips[count($ips) - 1]);
+    } else {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
 if ($input_nama) {
     $query = $db->prepare("SELECT * FROM komentar WHERE ip_client = ? AND exp_periode > NOW()");
     $query->execute([$clientIP]);
@@ -21,6 +32,7 @@ if ($input_nama) {
     }
 }
 
+// continue if not blocked
 if (empty($input_nama)) {
     loadKomentar(false);
 } else {
