@@ -2,7 +2,7 @@
 require_once('configs/config.php');
 
 // guest name
-$nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
+$nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"]) : null;
 ?>
 
 <!doctype html>
@@ -55,17 +55,17 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 </a>
             </li>
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" id="comments">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
-                        <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5V3zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a1.99 1.99 0 0 1-1-.268zM1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1z" />
+                <a href="javascript:void(0)" class="nav-link" id="gift">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                        <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
                     </svg>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" id="info">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                <a href="javascript:void(0)" class="nav-link" id="comments">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                        <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
                     </svg>
                 </a>
             </li>
@@ -99,44 +99,64 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         var navbar = document.getElementById("navbot");
         // show loading first
         loadLoading(true);
-        // audio
-        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-        var source = audioCtx.createBufferSource();
-        window.addEventListener('load', () => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'assets/music/music.mp3');
-            xhr.responseType = 'arraybuffer';
-            xhr.timeout = 20000; // 20 Seconds timeout, detect slow connection!
-            xhr.ontimeout = () => {
-                Swal.fire({
-                    text: 'Koneksi anda terlalu lambat',
-                    icon: 'error',
-                    allowOutsideClick: false,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    backdrop: '#ffffff',
-                    background: '#ffffff',
-                    confirmButtonText: 'Muat Ulang'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload();
-                    }
-                })
-            }
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    mainContent();
+        // Main
+        let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
+        if (screen) {
+            // audio
+            var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            var source = audioCtx.createBufferSource();
+            window.addEventListener('load', () => {
+                let xhr = new XMLHttpRequest();
+                xhr.open('GET', 'assets/music/music.mp3');
+                xhr.responseType = 'arraybuffer';
+                xhr.timeout = 20000; // 20 Seconds timeout, detect slow connection!
+                xhr.ontimeout = () => {
+                    Swal.fire({
+                        text: 'Koneksi anda terlalu lambat',
+                        icon: 'error',
+                        allowOutsideClick: false,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        backdrop: '#ffffff',
+                        background: '#ffffff',
+                        confirmButtonText: 'Muat Ulang'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    })
                 }
-            }
-            xhr.addEventListener('load', () => {
-                audioCtx.decodeAudioData(xhr.response).then((audioBuffer) => {
-                    source.buffer = audioBuffer;
-                    source.loop = true;
-                    source.connect(audioCtx.destination);
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        mainContent();
+                    }
+                }
+                xhr.addEventListener('load', () => {
+                    audioCtx.decodeAudioData(xhr.response).then((audioBuffer) => {
+                        source.buffer = audioBuffer;
+                        source.loop = true;
+                        source.connect(audioCtx.destination);
+                    });
                 });
-            });
-            xhr.send();
-        }, false);
+                xhr.send();
+            }, false);
+        } else {
+            // hide navbar
+            showNavbar(false);
+            // kill loading
+            loadLoading(false);
+            // contents non-responsive
+            const content = document.getElementById("content");
+            let main = document.createElement("div");
+            main.classList.add("min-vh-100", "d-flex", "flex-column");
+            let sec = document.createElement("div");
+            sec.classList.add("flex-grow-1", "d-flex", "align-items-center", "justify-content-center", "text-center", "p-2");
+            main.appendChild(sec);
+            let letter = document.createElement("p");
+            letter.innerHTML = "<strong>Buka dengan Smartphone anda untuk melihat full undangan atau Ubah orientasi layar Smartphone anda ke orientasi Portrait.</strong>";
+            sec.appendChild(letter);
+            content.append(main);
+        }
 
         function ctlIcon(set) {
             const ctl = document.getElementById("ctrl-music");
@@ -400,7 +420,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         const stbox = document.getElementById("story-box");
                         stbox.innerHTML = '<?php echo env('story_box'); ?>';
                         break;
-                    case 'comments':
+                    case 'gift':
                         const card_w = document.getElementById("card_wanita");
                         const an_w = document.getElementById("an_wanita");
                         card_w.value = '<?php echo env('card_wanita'); ?>';
@@ -411,8 +431,14 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                         card_p.value = '<?php echo env('card_pria'); ?>';
                         card_p.innerText = '<?php echo env('card_pria'); ?>';
                         an_p.innerText = 'a\/n ' + '<?php echo env('an_pria'); ?>';
+                        const add_gift = document.getElementById("addr_gift");
+                        add_gift.value = '<?php echo env('alamat_akad'); ?>';
+                        break;
+                    case 'comments':
                         // load comments
                         await loadComments(false, null);
+                        const f = document.getElementById("footer");
+                        f.innerHTML = '<p>&copy; Ryan Andri ' + new Date().getFullYear() + '</p>';
                         break;
                     default:
                         break;
@@ -449,7 +475,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
         }
 
         function c2cb(ids) {
-            let input = document.querySelector('#' + ids);
+            let input = document.getElementById(ids);
             let isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
             if (isiOSDevice) {
                 let range = document.createRange();
@@ -502,64 +528,43 @@ $nama_undangan = !empty($_GET["undangan"]) ? $_GET["undangan"] : null;
                 let height = window.innerHeight;
                 let top = anim[i].getBoundingClientRect().top;
                 if (top <= height) {
-                    anim[i].classList.add("animate__animated", "animate__slideInLeft", "animate__fast");
+                    anim[i].classList.add("animate__animated", "animate__flipInY", "animate__fast");
                 } else {
-                    anim[i].classList.remove("animate__animated", "animate__slideInLeft", "animate__fast");
+                    anim[i].classList.remove("animate__animated", "animate__flipInY", "animate__fast");
                 }
             }
         }
-
-        let screen = window.matchMedia("screen and (max-width: 780px) and (orientation: portrait)").matches;
 
         function mainContent() {
             // kill loading
             loadLoading(false);
-
-            if (screen) {
-                // trigger sa
-                confirmInvitation();
-                // trigger navbar listner
-                const nav = navbar.getElementsByClassName("nav-link");
-                for (let i = 0; i < nav.length; i++) {
-                    nav[i].addEventListener("click", function() {
-                        let current = document.getElementsByClassName("active");
-                        current[0].className = current[0].className.replace(" active", "");
-                        this.className += " active";
-                    });
-                }
-
-                document.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        let page = link.id;
-                        if (page != 'ctrl-music') {
-                            fetchPages(page);
-                        } else {
-                            controlMusic();
-                        }
-                    });
+            // trigger sa
+            confirmInvitation();
+            // trigger navbar listner
+            const nav = navbar.getElementsByClassName("nav-link");
+            for (let i = 0; i < nav.length; i++) {
+                nav[i].addEventListener("click", function() {
+                    let current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
                 });
-
-                window.addEventListener("scroll", animationListener);
-
-                // show navbar
-                showNavbar(true);
             }
-        }
 
-        if (!screen) {
-            // hide navbar
-            showNavbar(false);
-            // contents non-responsive
-            const content = document.getElementById("content");
-            let main = document.createElement("div");
-            main.classList.add("min-vh-100", "d-flex", "flex-column");
-            let sec = document.createElement("div");
-            sec.classList.add("flex-grow-1", "d-flex", "align-items-center", "justify-content-center", "text-center", "p-2");
-            main.appendChild(sec);
-            let letter = document.createElement("p");
-            letter.innerHTML = "<strong>Buka dengan Smartphone anda untuk melihat full undangan atau Ubah orientasi layar Smartphone anda ke orientasi Portrait.</strong>";
-            sec.appendChild(letter);
-            content.append(main);
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    let page = link.id;
+                    if (page != 'ctrl-music') {
+                        fetchPages(page);
+                    } else {
+                        controlMusic();
+                    }
+                });
+            });
+
+            window.addEventListener("scroll", animationListener);
+
+            // show navbar
+            showNavbar(true);
         }
 
         // auto refresh when rotate screen
