@@ -226,7 +226,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
             // process data if available
             res['data'].forEach(element => {
                 const _card = document.createElement("div");
-                _card.classList.add("card", "border-dark", "m-2");
+                _card.classList.add("card", "m-2");
 
                 const _cardBody = document.createElement("div");
                 _cardBody.classList.add("ms-2", "me-2", "mt-2");
@@ -437,9 +437,6 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
                     case 'comments':
                         // load comments
                         await loadComments(false, null);
-                        const f = document.getElementById("footer");
-                        f.innerHTML = '<p>&copy; Ryan Andri ' + new Date().getFullYear() + '</p>';
-                        break;
                     default:
                         break;
                 }
