@@ -1,8 +1,8 @@
 <?php
 require_once('configs/config.php');
 
-// guest name
-$nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"]) : null;
+$guest = !empty($_GET["g"]) ? htmlspecialchars($_GET["g"]) : null;
+$partner = !empty($_GET["p"]) ? htmlspecialchars($_GET["p"]) : null;
 ?>
 
 <!doctype html>
@@ -372,7 +372,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
                         caption.classList.add("animate__animated", "animate__slideInDown", "animate__fast");
                         caption.appendChild(tname);
                         caption.appendChild(tsec);
-                        let _gname = '<?php echo $nama_undangan; ?>';
+                        let _gname = '<?php echo $guest; ?>';
                         if (_gname) {
                             const gname = document.getElementById("gname");
                             const card = document.createElement("div");
@@ -380,7 +380,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
                             card.classList.add("animate__animated", "animate__zoomIn", "animate__fast");
                             const _text = document.createElement("div");
                             _text.style = "font-size: 16px";
-                            _text.innerHTML = _gname + '<br> dan <br> Keluarga';
+                            _text.innerHTML = _gname + '<br> dan <br>' + '<?php echo $partner; ?>';
                             // append child
                             card.appendChild(_text);
                             // append Parent
