@@ -205,6 +205,12 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
             }
         }
 
+        function clearInput() {
+            document.getElementById("nama").value = '';
+            document.getElementById("kehadiran").value = '';
+            document.getElementById("komentar").value = '';
+        }
+
         function showComments(res, _submit, stat) {
             // container
             const _comments = document.getElementById("comments-container");
@@ -221,6 +227,7 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
                 _div.appendChild(_p);
                 // append parent
                 _comments.appendChild(_div);
+                clearInput();
                 return;
             }
             // process data if available
@@ -258,17 +265,13 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
             });
 
             if (_submit && (stat == 'success')) {
-                document.getElementById("nama").value = '';
-                document.getElementById("kehadiran").value = '';
-                document.getElementById("komentar").value = '';
+                clearInput();
                 Swal.fire({
                     text: "Terima Kasih telah berkomentar :)",
                     icon: 'success'
                 });
             } else if (_submit && (stat == 'spam')) {
-                document.getElementById("nama").value = '';
-                document.getElementById("kehadiran").value = '';
-                document.getElementById("komentar").value = '';
+                clearInput();
             }
         }
 
@@ -388,10 +391,10 @@ $nama_undangan = !empty($_GET["undangan"]) ? htmlspecialchars($_GET["undangan"])
                         // bride
                         const bride = document.getElementById("bride");
                         bride.innerHTML = '<h4 class="text-beautify"><strong>' + '<?php echo env('nama_wanita'); ?>' + '</strong></h4>' +
-                            '<h6>' + '<?php echo env('dt_wanita'); ?>' + '</h6>' +
+                            '<span>' + '<?php echo env('dt_wanita'); ?>' + '</span>' +
                             '<h4 class="text-beautify"><strong>&</strong></h4>' +
                             '<h4 class="text-beautify"><strong>' + '<?php echo env('nama_pria'); ?>' + '</strong></h4>' +
-                            '<h6>' + '<?php echo env('dt_pria'); ?>' + '</h6>';
+                            '<span>' + '<?php echo env('dt_pria'); ?>' + '</span>';
                         // date time
                         const _date = document.getElementById("date-time");
                         _date.innerHTML = '<strong>' + '<?php echo env('tgl_akad'); ?>' + '</strong>';

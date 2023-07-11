@@ -30,9 +30,9 @@ $configs = [
 
     // bride
     'nama_wanita' => 'Nama Lengkap Wanita',
-    'dt_wanita' => 'Putra/ri ke berapa dari Nama Wali',
+    'dt_wanita' => 'Putra/ri ke berapa dari Nama Wali bapak & ibu',
     'nama_pria' => 'Nama Lengkap Pria',
-    'dt_pria' => 'Putra/ri ke berapa dari Nama Wali',
+    'dt_pria' => 'Putra/ri ke berapa dari Nama Wali bapak & ibu',
     'kediaman' => 'Mempelai Pria/Wanita',
     // short story
     // must have paragraph tag <p></p>
